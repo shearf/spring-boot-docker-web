@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shearf.demo.docker.dal.mapper.AccessLogMapper" >
+    <resultMap id="BaseResultMap" type="com.shearf.demo.docker.domain.entity.AccessLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="remote_addr" property="remoteAddr" jdbcType="CHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `remote_addr`, `create_time`
+    </sql>
+    <insert id="insert" parameterType="com.shearf.demo.docker.domain.entity.AccessLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `soa_access_log` (`remote_addr`, `create_time`)
+        VALUES (#{remoteAddr, jdbcType=CHAR}, #{createTime, jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM `soa_access_log`
+    </select>
+</mapper>
