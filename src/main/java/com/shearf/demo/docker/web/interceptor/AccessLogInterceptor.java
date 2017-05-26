@@ -3,6 +3,7 @@ package com.shearf.demo.docker.web.interceptor;
 import com.shearf.demo.docker.domain.entity.AccessLog;
 import com.shearf.demo.docker.service.AccessLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,11 +22,15 @@ public class AccessLogInterceptor implements HandlerInterceptor {
     @Autowired
     private AccessLogService accessLogService;
 
+    @Value("${spring.application.name}")
+    private String serverName;
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
         AccessLog accessLog = new AccessLog();
         accessLog.setRemoteAddr(InetAddress.getLocalHost().getHostAddress());
+        accessLog.setServerName(serverName);
         accessLog.setCreateTime(new Date());
         accessLogService.createLog(accessLog);
 

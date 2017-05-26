@@ -12,5 +12,7 @@ public class AccessLog extends Model {
 
     private String remoteAddr;
 
+    private String serverName;
+
     private Date createTime;
 }

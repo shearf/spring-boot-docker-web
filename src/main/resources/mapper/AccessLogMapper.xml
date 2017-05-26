@@ -3,16 +3,17 @@
 <mapper namespace="com.shearf.demo.docker.dal.mapper.AccessLogMapper" >
     <resultMap id="BaseResultMap" type="com.shearf.demo.docker.domain.entity.AccessLog">
         <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="server_name" property="serverName" jdbcType="VARCHAR" />
         <result column="remote_addr" property="remoteAddr" jdbcType="CHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        `id`, `remote_addr`, `create_time`
+        `id`, `server_name`, `remote_addr`, `create_time`
     </sql>
     <insert id="insert" parameterType="com.shearf.demo.docker.domain.entity.AccessLog" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `soa_access_log` (`remote_addr`, `create_time`)
-        VALUES (#{remoteAddr, jdbcType=CHAR}, #{createTime, jdbcType=TIMESTAMP})
+        INSERT INTO `soa_access_log` (`remote_addr`, `server_name`, `create_time`)
+        VALUES (#{remoteAddr, jdbcType=CHAR}, #{serverName, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP})
     </insert>
 
     <select id="selectAll" resultMap="BaseResultMap">
