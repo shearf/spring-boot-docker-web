@@ -2,17 +2,13 @@ version: "2"
 services:
   fake_mysql:
     container_name: fake_mysql
-    image: "mysql:5.7"
+    image: "mysql:5.6"
     environment:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - "33061:3306"
     volumes:
       - "./sql:/docker-entrypoint-initdb.d:ro"
-#    links:
-#      - fake_server_1: client_1
-#      - fake_server_2: client_2
-#      - fake_server_3: client_3
 
   fake_redis:
     container_name: fake_redis
@@ -24,30 +20,39 @@ services:
     image: "fake_server:0.0.1-SNAPSHOT"
     links:
       - "fake_mysql:db"
+      - "fake_redis:redis"
     environment:
       APPLICATION_NAME: fake_server_1
       DATABASE_IP: db
       DATABASE_PORT: 3306
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   fake_server_2:
     container_name: fake_server_2
     image: "fake_server:0.0.1-SNAPSHOT"
     links:
       - "fake_mysql:db"
+      - "fake_redis:redis"
     environment:
       APPLICATION_NAME: fake_server_2
       DATABASE_IP: db
       DATABASE_PORT: 3306
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   fake_server_3:
     container_name: fake_server_3
     image: "fake_server:0.0.1-SNAPSHOT"
     links:
       - "fake_mysql:db"
+      - "fake_redis:redis"
     environment:
       APPLICATION_NAME: fake_server_3
       DATABASE_IP: db
       DATABASE_PORT: 3306
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   fake_slb:
     container_name: fake_slb

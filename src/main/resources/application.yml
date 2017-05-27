@@ -8,3 +8,9 @@ database:
 spring:
   application:
     name: fake_server
+
+  redis:
+    host: 127.0.0.1
+    port: 63791
+
+
